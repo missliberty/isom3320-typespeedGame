@@ -1,8 +1,13 @@
 
 public class Player {
-
-	public Player() {
-		// TODO Auto-generated constructor stub
+	
+	//Declare variables for the Player class
+	public String name;
+	public int score;
+	
+	//Constructor for the class
+	public Player(String playerName) {
+		this.name = playerName;
 	}
 
 	public static void main(String[] args) {
