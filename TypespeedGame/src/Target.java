@@ -6,8 +6,8 @@ public class Target implements Runnable{
 	//Declare variables for the class
 	public double xCor;
 	public double yCor;
-	public String[] wordsOnScreen = new String[10000];
-	public String[] wordBank = new String[10000];
+	public String[] wordsOnScreen = new String[500];
+	public String[] wordBank = new String[500];
 	public double speed;
 	
 	//define file name for the text file to be scanned
