@@ -21,7 +21,7 @@ public class Player {
 		for (i = 0; i < wordsOnScreen.length; i++) {
 			if (wordsOnScreen[i] == inputText) {
 				//Return true if the input text matches an element in the array
-				score = score + inputText.length();
+				score = score + inputText.length(); //Or add the score later when the shooter already finish the shooting animation?
 				return true;
 			}
 		}
@@ -39,6 +39,18 @@ public class Player {
 	}
 	
 	*/
+	
+	
+	/**Leaderboard Stuff, which should be also placed in the canvas class */
+	
+	//crearte player array for storing the name and score for all player
+	Player[] players = new Player[10000];
+	
+	//method for sorting the top 3 players in the game
+	public static sortTopThree (Player[] players) {
+		
+	}
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
