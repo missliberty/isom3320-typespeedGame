@@ -1,5 +1,7 @@
 import java.lang.*;
 import java.util.*;
+import java.util.concurrent.*; //for multi-threading use
+import java.lang.*; //for random pick use
 
 public class Target implements Runnable{
 	
@@ -7,11 +9,18 @@ public class Target implements Runnable{
 	public double xCor;
 	public double yCor;
 	public String[] wordsOnScreen = new String[500];
+	public boolean[] onScreenWordsOccupied = new boolean[500]; /*Since onScreenWords can be repeated, it is needed to record
+	all the targets on screen */
 	public String[] wordBank = new String[500];
-	public double speed;
+	public double speed; // Or duration?
 	
 	//define file name for the text file to be scanned
 	public static String fileName = "words.txt";
+	
+	//Initialize the variables
+	for (i = 0; i < onScreenWordsOccupied.length; i++) {
+		onScreenWordsOccupied[i] = false;
+	}
 	
 	
 	public Target() {
@@ -45,6 +54,49 @@ public class Target implements Runnable{
 		}
 		//close the scanner
 		scannerForTextFile.close();
+		
+	}
+	
+	
+	
+	/** Multi threading for picking few words as target*/
+	
+	//Create executor for handling thread pool
+	ExecutorService executor = Executors.newFixedThreadPool(3);
+	
+	//Submit runnable task to the executor
+	executor.execute(printWord());
+	executor.execute(printWord());
+	executor.execute(printWord());
+	
+	//Close the executor
+	executor.shutdown();
+	
+	
+	//Method for printing the words
+	public static void printWord() {
+		String wordToBePrinted = pickWords(wordBank);
+		
+		//Put words inside the words on screen array
+		int counter = 0;
+		for (i = 0; i < wordsOnScreen.length; i++) {
+			if (onScreenWordsOccupied[i] == false) {
+				onScreenWordsOccupied[i] = true;
+				wordsOnScreen[i] = wordToBePrinted;
+				break;
+			}
+		}
+		
+		//Print the word on the screen with a speed / duration
+		
+		
+	}
+	
+	//Picking the word to be printed randonly from the word bank
+	public static String pickWords(String[] wordBank) {
+		//Generate a random number from 0 to 499
+		int randomIndex = (int) Math.random() * 500;
+		reutrn wordBank[randomIndex];
 		
 	}
 	
