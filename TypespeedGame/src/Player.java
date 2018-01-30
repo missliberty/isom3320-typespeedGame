@@ -14,12 +14,12 @@ public class Player {
 	
 	
 	
-	/** These should be put as an event handler under the enter button 
+	/** These should be put as an event handler under the enter button */
 	
 	//Method for checking whether the input text matches the word on the screen
 	public static boolean checkCorrect(String inputText, String[] wordsOnScreen) {
 		for (i = 0; i < wordsOnScreen.length; i++) {
-			if (wordsOnScreen[i] == inputText) {
+			if (wordsOnScreen[i].equals(inputText)) {
 				//Return true if the input text matches an element in the array
 				score = score + inputText.length(); //Or add the score later when the shooter already finish the shooting animation?
 				return true;
@@ -30,16 +30,31 @@ public class Player {
 		return false;
 	}
 	
-	boolean isCorrect = checkCorrect(textfieldname.getText(), Target.wordsOnScreen);
+	public static void mainCorrect () {
+		
+		//Check whether the input is correct
+		boolean isCorrect = checkCorrect(textfieldname.getText(), Target.wordsOnScreen);
 	
-	if (isCorrect) {
-		//Pause the animation for the word
-		//Get the coordinates
-		//Calll shooter function
+		if (isCorrect) {
+			
+			//Need to write the code here!!
+			for (i = 0; i < wordsOnScreen.length; i++)
+			
+			//1. Pause the animation for the word
+			//2. Get the coordinates
+
+			double xCor = Target.getXCor();
+			double yCor = Target.getYcor();
+			//3. remove it from the wordsOnScreen array
+			
+			for (i = 0; i < wordsOnScreen.length; i++) {
+				if (wordsOnScreen[i])
+			}
+			//4. Call shooter function
+		}
 	}
 	
-	*/
-	
+
 	
 	/**Leaderboard Stuff, which should be also placed in the canvas class */
 	
