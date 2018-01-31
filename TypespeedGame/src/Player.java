@@ -16,12 +16,15 @@ public class Player {
 	
 	/** These should be put as an event handler under the enter button */
 	
+	int correctCounter = 0;
+	
 	//Method for checking whether the input text matches the word on the screen
 	public static boolean checkCorrect(String inputText, String[] wordsOnScreen) {
-		for (i = 0; i < wordsOnScreen.length; i++) {
+		for (int i = 0; i < wordsOnScreen.length; i++) {
 			if (wordsOnScreen[i].equals(inputText)) {
 				//Return true if the input text matches an element in the array
 				score = score + inputText.length(); //Or add the score later when the shooter already finish the shooting animation?
+				correctCounter++;
 				return true;
 			}
 		}
@@ -30,7 +33,7 @@ public class Player {
 		return false;
 	}
 	
-	public static void mainCorrect () {
+	public static void mainCorrect (Target targetWord) {
 		
 		//Check whether the input is correct
 		boolean isCorrect = checkCorrect(textfieldname.getText(), Target.wordsOnScreen);
@@ -38,7 +41,7 @@ public class Player {
 		if (isCorrect) {
 			
 			//Need to write the code here!!
-			for (i = 0; i < wordsOnScreen.length; i++)
+			for (int i = 0; i < wordsOnScreen.length; i++)
 			
 			//1. Pause the animation for the word
 			//2. Get the coordinates
@@ -47,10 +50,19 @@ public class Player {
 			double yCor = Target.getYcor();
 			//3. remove it from the wordsOnScreen array
 			
-			for (i = 0; i < wordsOnScreen.length; i++) {
+			for (int i = 0; i < wordsOnScreen.length; i++) {
 				if (wordsOnScreen[i])
 			}
 			//4. Call shooter function
+			//5. check speed and increase if needed
+			checkScore(targetWord);
+		}
+	}
+	
+	public static void checkScore(Target target) {
+		if (correctCounter = 5) {
+			target.speed += 10; //might need to change depending on whether it is the duration or the speed only
+			correctCounter = 0;
 		}
 	}
 	
@@ -74,13 +86,13 @@ public class Player {
 		Player[] tempPlayers = new Player[players.length];
 		
 		//Copy the data to the temp
-		for (i = 0; i < players.length; i++) {
+		for (int i = 0; i < players.length; i++) {
 			tempPlayers[i] = players[i];
 		}
 		
 		//Loop through all the players data in the array
-		for (i = 0; i < topThree.length; i++) {
-			for (j = 0; j < players.length; j++) {
+		for (int i = 0; i < topThree.length; i++) {
+			for (int j = 0; j < players.length; j++) {
 				if (tempPlayers[j].score > prevLargestScore) {
 					prevLargestScore = tempPlayers[j].score;
 					prevLargestName = tempPlayers[j].name;
