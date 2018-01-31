@@ -8,17 +8,20 @@ public class Target implements Runnable{
 	//Declare variables for the class
 	public double xCor;
 	public double yCor;
+	public double speed; // Or duration?
+	
+	/** these variables might need to move to the canvas class*/
 	public String[] wordsOnScreen = new String[500];
 	public boolean[] onScreenWordsOccupied = new boolean[500]; /*Since onScreenWords can be repeated, it is needed to record
 	all the targets on screen */
 	public String[] wordBank = new String[500];
-	public double speed; // Or duration?
+	
 	
 	//define file name for the text file to be scanned
 	public static String fileName = "words.txt";
 	
 	//Initialize the variables
-	for (i = 0; i < onScreenWordsOccupied.length; i++) {
+	for (int i = 0; i < onScreenWordsOccupied.length; i++) {
 		onScreenWordsOccupied[i] = false;
 	}
 	
@@ -79,7 +82,7 @@ public class Target implements Runnable{
 		
 		//Put words inside the words on screen array
 		int counter = 0;
-		for (i = 0; i < wordsOnScreen.length; i++) {
+		for (int i = 0; i < wordsOnScreen.length; i++) {
 			if (onScreenWordsOccupied[i] == false) {
 				onScreenWordsOccupied[i] = true;
 				wordsOnScreen[i] = wordToBePrinted;
@@ -95,7 +98,7 @@ public class Target implements Runnable{
 	//Picking the word to be printed randonly from the word bank
 	public static String pickWords(String[] wordBank) {
 		//Generate a random number from 0 to 499
-		int randomIndex = (int) Math.random() * 500;
+		int randomIndex = (int) (Math.random() * 500);
 		reutrn wordBank[randomIndex];
 		
 	}
