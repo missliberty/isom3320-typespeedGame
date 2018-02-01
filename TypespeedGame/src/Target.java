@@ -3,7 +3,7 @@ import java.util.*;
 import java.util.concurrent.*; //for multi-threading use
 import java.lang.*; //for random pick use
 
-public class Target implements Runnable{
+public class Target implements Runnable {
 	
 	//Declare variables for the class
 	public double xCor;
@@ -60,8 +60,6 @@ public class Target implements Runnable{
 		
 	}
 	
-	
-	
 	/** Multi threading for picking few words as target*/
 	
 	//Create executor for handling thread pool
@@ -95,7 +93,8 @@ public class Target implements Runnable{
 		
 	}
 	
-	//Picking the word to be printed randonly from the word bank
+	//Picking the word to be printed randomly from the word bank
+	
 	public static String pickWords(String[] wordBank) {
 		//Generate a random number from 0 to 499
 		int randomIndex = (int) (Math.random() * 500);
