@@ -11,9 +11,6 @@ public class Player {
 	}
 	
 	
-	
-	
-	
 	/** These should be put as an event handler under the enter button */
 	
 	int correctCounter = 0;
