@@ -8,7 +8,7 @@ public class Target implements Runnable{
 	//Declare variables for the class
 	public double xCor;
 	public double yCor;
-	public double speed; // Or duration?
+	public double duration; // duration for the target acrossing the screen (in millisecs)
 	
 	/** these variables might need to move to the canvas class*/
 	public String[] wordsOnScreen = new String[500];
@@ -34,11 +34,6 @@ public class Target implements Runnable{
 	@override
 	public void run() {
 	
-	}
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
 	}
 	
 	//Scan word from the text file
@@ -90,7 +85,7 @@ public class Target implements Runnable{
 			}
 		}
 		
-		//Print the word on the screen with a speed / duration
+		//Print the word on the screen with a duration
 		
 		
 	}
