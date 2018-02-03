@@ -1,5 +1,4 @@
 import javafx.application.Application;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
@@ -9,7 +8,6 @@ import javafx.animation.*;
 import javafx.event.*;
 import javafx.util.Duration;
 import javafx.scene.media.AudioClip;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -19,13 +17,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -70,61 +61,52 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
        explode = new ImageView(new Image("images/explosion.png"));
        bg = new Image("images/bg.jpg");
        
-       //Setup the toolbar
-       
+       //Set up the border pane layout
        BorderPane root = new BorderPane();
        
+       //Setup the toolbar spacing
        final Pane leftSpace = new Pane();
        HBox.setHgrow(
                leftSpace,
-               Priority.SOMETIMES
-       );
+               Priority.SOMETIMES);
 
        final Pane rightSpace = new Pane();
        
        HBox.setHgrow(
                rightSpace,
-               Priority.SOMETIMES
-       );
+               Priority.SOMETIMES);
 
        final ToolBar toolBar = new ToolBar(
                new Text("Score: "),
                leftSpace,
                rightSpace,
-               new Text("Time: ")
-       );
+               new Text("Time: "));
        
        toolBar.getStyleClass().add("toolBar");
        toolBar.setPrefWidth(700);
        toolBar.setPrefHeight(40);
        
-
-       //Set up the border pane layout
-       
-       //Label label1 = new Label("Type here:");
-       //TextField textField = new TextField ();
-       
+       //Create and style input bar
        HBox inputBar = new HBox();
        inputBar.getStyleClass().add("inputBar");
-       
-       
-     //Defining the Name text field
+
+       //Create text label
        final Text name = new Text();
        name.setText("Type any of the words: ");
        name.getText();
        
+       //Add label to the input bar
        inputBar.getChildren().add(name);
-       
       
+       //Create and style mid-section
        HBox gameCenter = new HBox();
        gameCenter.getStyleClass().add("gameCenter");
        
+       //Add boxes to the border pane
        root.setTop(toolBar);
        root.setCenter(gameCenter);
        root.setBottom(inputBar);
-       
-       root.getChildren().addAll();
-       
+  
        stage.setScene(new Scene(root, 700, 500));
        root.getStylesheets().add (Canvas.class.getResource("TypespeedGame.css").toExternalForm());
        
