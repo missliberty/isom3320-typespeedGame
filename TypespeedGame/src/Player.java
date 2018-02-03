@@ -38,27 +38,34 @@ public class Player {
 		if (isCorrect) {
 			
 			//Need to write the code here!!
-			for (int i = 0; i < wordsOnScreen.length; i++)
+			//for (int i = 0; i < wordsOnScreen.length; i++)
 			
 			//1. Pause the animation for the word
 			//2. Get the coordinates
 
-			double xCor = Target.getXCor();
-			double yCor = Target.getYcor();
+			double xCor = targetWord.getXCor();
+			double yCor = targetWord.getYcor();
 			//3. remove it from the wordsOnScreen array
 			
 			for (int i = 0; i < wordsOnScreen.length; i++) {
-				if (wordsOnScreen[i])
+				if (wordsOnScreen[i].equals(targetWord))
 			}
+			
 			//4. Call shooter function
+			Shooter shooter = new Shooter(xCor, yCor);
+			shooter.showShooter();
+			
 			//5. check speed and increase if needed
 			checkScore(targetWord);
 		}
+		
+		//Empty the text field for next entry
+		textfieldname.setText("");
 	}
 	
 	public static void checkScore(Target target) {
 		if (correctCounter = 5) {
-			target.speed += 10; //might need to change depending on whether it is the duration or the speed only
+			target.duration -= 100; //decrease the duration by 100 millisec
 			correctCounter = 0;
 		}
 	}
