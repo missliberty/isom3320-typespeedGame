@@ -1,5 +1,3 @@
-/**
-
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -73,32 +71,4 @@ public Button getStartButton() {
 public void setStartButton(Button startButton) {
 	this.startButton = startButton;
 }
-}
-
-**/
-
-import javafx.scene.*;
-import javafx.scene.image.*;
-
-
-public class SplashScreen {  
-  private static Image gameRules;
-  private static Node rulesNode; 
-  
-  
-  //background image
-  public static Node setBackground() throws Exception {
-    gameRules = new Image("images/bg.jpg", 1000, 600, false, false);
-    rulesNode = new ImageView(gameRules);
-    
-    return rulesNode; 
-  }
-  
-  
-  //instructions 
-  public static Node addButton() throws Exception {
-    Button startButton = new Button("START GAME");
-    
-    return startButton; 
-  }
 }
