@@ -3,12 +3,13 @@ import java.util.*;
 import java.util.concurrent.*; //for multi-threading use
 import java.lang.*; //for random pick use
 
-public class Target implements Runnable {
+public class Target {
 	
 	//Declare variables for the class
 	public double xCor;
 	public double yCor;
 	public double duration; // duration for the target acrossing the screen (in millisecs)
+	public boolean isPause;
 	
 	/** these variables might need to move to the canvas class*/
 	public String[] wordsOnScreen = new String[500];
@@ -31,11 +32,15 @@ public class Target implements Runnable {
 		// TODO Auto-generated constructor stub
 	}
 	
+	
+	/*
 	//Override the run() method in Runnable interface
 	@override
 	public void run() {
 	
 	}
+	
+	*/
 
 	//Scan word from the text file
 	public static void scanFile() throws IOException {
@@ -51,13 +56,14 @@ public class Target implements Runnable {
 			wordBank[wordIndex] = scannerForTextFile.nextLine();
 			wordIndex++;
 		}
+		
 		//close the scanner
 		scannerForTextFile.close();
 		
 	}
 	
 	/** Multi threading for picking few words as target*/
-	
+	/*
 	//Create executor for handling thread pool
 	ExecutorService executor = Executors.newFixedThreadPool(3);
 	
@@ -68,6 +74,8 @@ public class Target implements Runnable {
 	
 	//Close the executor
 	executor.shutdown();
+	*/
+	
 	
 	
 	//Method for printing the words
@@ -99,12 +107,12 @@ public class Target implements Runnable {
 	}
 	
 	//Get method for X coordinate
-	public static double getXCor() {
+	public double getXCor() {
 		return xCor;
 	}
 	
 	//Get method for Y coordinate
-	public static double getYCor() {
+	public double getYCor() {
 		return yCor;
 	}
 
