@@ -7,9 +7,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 
 public class SplashScreen extends Application {
 	
@@ -22,17 +24,29 @@ public class SplashScreen extends Application {
   public static void main(String[] args) throws Exception { launch(args); }
 
   @Override public void init() {
-	  
-    ImageView splash = new ImageView(new Image("http://i65.tinypic.com/6p7zm0.png"));
+
+    int x = 700;
+    int y = 500;
     
+    Image image = new Image("http://i65.tinypic.com/6p7zm0.png",x,y, true, false);
+    ImageView iv1 = new ImageView();
+    iv1.setImage(image);
+    iv1.setPreserveRatio(true);
+   // iv1.setFitHeight(x);
+   // iv1.setFitWidth(y);
+
+    Button button = new Button("START GAME");
+    button.setTranslateX(10);
+    button.setTranslateY(10);
+    button.setContentDisplay(ContentDisplay.TOP);
+
+
+    StackPane stackPane = new StackPane();
+    stackPane.getChildren().addAll(iv1, button); 
+
     splashLayout = new HBox();
-    splashLayout.getChildren().addAll(splash);
-    
-    //Need to put the button on top of the image 
-    
-    //Apply CSS styles
-    splashLayout.setStyle("-fx-padding: 5; -fx-background-color: cornsilk; -fx-border-width:5; -fx-border-color: linear-gradient(to bottom, chocolate, derive(chocolate, 50%));");
-    splashLayout.setEffect(new DropShadow());
+    splashLayout.getChildren().add(stackPane);
+
   }
   
   @Override public void start(final Stage initStage) throws Exception {
