@@ -1,5 +1,7 @@
-.root {
-     -fx-background-image: url(/images/bg.png);
+.gameCenter {
+     -fx-background-image: url(/images/bg.jpg);
+     width: 100%;
+     background-repeat: no-repeat;
 }
 
 .label {
@@ -7,6 +9,22 @@
     -fx-font-weight: bold;
     -fx-text-fill: #333333;
     -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+}
+
+.inputBar {
+    -fx-background-color: white;
+    -fx-padding: 15;
+    -fx-spacing: 10;
+}
+
+.toolBar {
+    -fx-background-color: white;
+    -fx-margin: 0,10,0,10;
+}
+
+
+.hbox {
+	-fx-background-color: white;
 }
 
 

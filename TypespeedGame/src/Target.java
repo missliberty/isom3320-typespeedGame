@@ -16,10 +16,11 @@ public class Target implements Runnable {
 	all the targets on screen */
 	public String[] wordBank = new String[500];
 	
-	
+
 	//define file name for the text file to be scanned
-	public static String fileName = "words.txt";
+	public static String fileName = "words.txt"; 
 	
+	//THIS FOR LOOP SHOULD BE INSIDE A METHOD TO REMOVE ERROR
 	//Initialize the variables
 	for (int i = 0; i < onScreenWordsOccupied.length; i++) {
 		onScreenWordsOccupied[i] = false;
@@ -36,10 +37,11 @@ public class Target implements Runnable {
 	
 	}
 	
-	public static void main(String[] args) {
+	//WHY MAIN HERE?
+	//public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-	}
+	//}
 	
 	//Scan word from the text file
 	public static void scanFile() throws IOException {

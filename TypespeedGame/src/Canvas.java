@@ -1,7 +1,9 @@
 import javafx.application.Application;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.image.*;
 import javafx.animation.*;
 import javafx.event.*;
@@ -10,10 +12,31 @@ import javafx.scene.media.AudioClip;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import java.awt.TextField;
+import javafx.beans.property.ReadOnlyIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.control.ToolBar;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+
 
 public class Canvas extends Application implements EventHandler<ActionEvent> {
  
-    private ImageView bg;
+    private Image bg;
     private ImageView shooter; 
     private ImageView bullet;
     private ImageView explode;
@@ -38,35 +61,76 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
     **/
       
     }
-     
-    public void start(Stage stage) throws Exception {
-    	
-    	BorderPane root = new BorderPane();
-    	root.setPadding(new Insets(10, 0, 10, 0));
-    	
-    	Button btnBottom = new Button("Bottom");
-    	root.setBottom(btnBottom);
-    	BorderPane.setAlignment(btnBotton, Pos.BOTTOM_LEFT);
-        
+    
+    @Override
+    public void start(Stage stage) {
+    	 
+       shooter = new ImageView(new Image("images/shooter.png"));
+       bullet = new ImageView(new Image("images/bullet.jpg"));
+       explode = new ImageView(new Image("images/explosion.png"));
+       bg = new Image("images/bg.jpg");
+       
+       //Setup the toolbar
+       
+       BorderPane root = new BorderPane();
+       
+       final Pane leftSpace = new Pane();
+       HBox.setHgrow(
+               leftSpace,
+               Priority.SOMETIMES
+       );
 
-       shooter = new ImageView(new Image("shooter.png"));
-       bg = new ImageView(new Image("bg.jpg"));
-       bullet = new ImageView(new Image("bullet.jpg"));
-       explode = new ImageView(new Image("explosion.png"));
+       final Pane rightSpace = new Pane();
+       
+       HBox.setHgrow(
+               rightSpace,
+               Priority.SOMETIMES
+       );
 
+       final ToolBar toolBar = new ToolBar(
+               new Text("Score: "),
+               leftSpace,
+               rightSpace,
+               new Text("Time: ")
+       );
+       
+       toolBar.getStyleClass().add("toolBar");
+       toolBar.setPrefWidth(700);
+       toolBar.setPrefHeight(40);
+       
+
+       //Set up the border pane layout
+       
+       //Label label1 = new Label("Type here:");
+       //TextField textField = new TextField ();
+       
+       HBox inputBar = new HBox();
+       inputBar.getStyleClass().add("inputBar");
+       
+       
+     //Defining the Name text field
+       final Text name = new Text();
+       name.setText("Type any of the words: ");
+       name.getText();
+       
+       inputBar.getChildren().add(name);
+       
+      
+       HBox gameCenter = new HBox();
+       gameCenter.getStyleClass().add("gameCenter");
+       
+       root.setTop(toolBar);
+       root.setCenter(gameCenter);
+       root.setBottom(inputBar);
+       
        root.getChildren().addAll();
-       root.setAlignment(Pos.CENTER);
-       root.setHgap(10);
-       root.setVgap(10);
-       root.setPadding(new Insets(25, 0, 25, 0));
        
        stage.setScene(new Scene(root, 700, 500));
-       scene.getStylesheets().add (Login.class.getResource("TypespeedGame.css").toExternalForm());
+       root.getStylesheets().add (Canvas.class.getResource("TypespeedGame.css").toExternalForm());
        
        Text scenetitle = new Text("Typespeed Challenge");
        scenetitle.setFont(Font.font("Monotype Corsiva", FontWeight.NORMAL, 20));
-       root.add(scenetitle, 0, 0, 2, 1);
-
+       
        Timeline timeline = new Timeline();
        timeline.getKeyFrames().add(new KeyFrame(new Duration(100), this));
        timeline.setCycleCount(Timeline.INDEFINITE);
@@ -78,7 +142,8 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
        stage.show();
     }
     
-    public static void main (String[] args){
+  
+	public static void main (String[] args){
       launch(args);
     }
     

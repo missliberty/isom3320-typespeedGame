@@ -17,6 +17,7 @@ public class GameInit {
 	private Canvas canvas;
     private Label currentScore;
     private Rectangle inputField;
+    
 
 	public GameInit() {
 		
