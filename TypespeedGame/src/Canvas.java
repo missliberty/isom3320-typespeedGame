@@ -54,15 +54,22 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
     }
     
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws Exception {
     	 
        shooter = new ImageView(new Image("images/shooter.png"));
        bullet = new ImageView(new Image("images/bullet.jpg"));
        explode = new ImageView(new Image("images/explosion.png"));
        bg = new Image("images/bg.jpg");
        
+       //Call Splash Screen (need to override launch)
+       
+       //Pane startPane = new Pane();
+       //startPane.getChildren().addAll(SplashScreen.addButton()); 
+       
+       
        //Set up the border pane layout
        BorderPane root = new BorderPane();
+      
        
        //Setup the toolbar spacing
        final Pane leftSpace = new Pane();
@@ -127,6 +134,7 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
   
 	public static void main (String[] args){
       launch(args);
+      
     }
     
  }
