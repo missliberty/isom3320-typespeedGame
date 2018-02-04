@@ -1,18 +1,26 @@
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
-public class Shooter {
+public class Shooter extends Canvas {
 	
 	//Set up the starting variables
 	
 	private boolean visible; 
 	private int x, y; //position where the shooter appears
-	private int wordX, wordY // get the position of the target
+	private int wordX, wordY; // get the position of the target
+	
 	//bullet variables
+
+	private ImageView shooter; 
+    private ImageView bullet;
+    
 
 	public Shooter(int startX, int startY) {
 		
+		shooter = new ImageView(new Image("images/shooter.png"));
 		x = startX;
 		y = startY;
-		visible = false; //by default the shooter is invisible 
 	
 	}
 	
@@ -20,16 +28,35 @@ public class Shooter {
 	
 	public void showShooter(){
 		
+		boolean isVisible = false; //by default the shooter is invisible 
+		
 		if () /** word is correctly inputted by user**/ {
-			startX = /**use the X of the word that was correctly identified**/;
+			
+			isVisible = true;
+			
+			//How to link to actual Canvas? 
+			
+			Canvas.root.inputBar.getChildren().addAll(shooter, bullet);
+			
+			
+			startX = getWordX(); //get the X position of the currently paused word 
 			startY = 0; // show the Shooter on the bottom of the Canvas
-			visible = true;
 		}
 	}
 	
 	//A method that shoots the bullet
 	
-	public void shootBullet() {
+	public void shoot() {
+		 
+		 ImageView bullet = new ImageView(new Image(getClass().getResourceAsStream("images/bullet.jpg")));
+		 getX();
+		 getY();
+		 
+		
+		 
+		 //make canvas show the image 
+		
+		}
 		//show bullet image
 		//set target 
 		//automatically shoot when target identified 

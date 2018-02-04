@@ -1,7 +1,10 @@
 import javafx.scene.shape.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Priority;
@@ -19,9 +22,13 @@ import javafx.scene.layout.Pane;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Scanner;
-
+import javafx.scene.control.Label;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
@@ -39,37 +46,27 @@ import javafx.scene.text.TextAlignment;
 public class Canvas extends Application implements EventHandler<ActionEvent> {
  
     private Image bg;
-    private ImageView shooter; 
-    private ImageView bullet;
     private ImageView explode;
     private AudioClip swoosh;
     private AudioClip explosion;
     private boolean visible;
+    public int currentScore;
+    long currentTime = System.currentTimeMillis();
+
     
     public static String[] wordBank = new String[500];
     public static String[] wordsOnScreen = new String[500];
 
 	//define file name for the text file to be scanned
 	public static String fileName ="words.txt";
-	
-	private Node userInput;
-    
     
 	public void handle(ActionEvent event){
       
      //Make the shooter appear if one word is paused/matched 
      //Make the bullet move + play sound
      //Show explosion + play sound
-     
-    /**  SAMPLE CODE
-     if (plane.getX() > 250)
-        plane.setX(-50);
-      else
-        plane.setX(plane.getX() + 10);
-      if(plane.getX() == -50)
-        swoosh.play();
-    }
-    **/
+		
+	
 }
     public static void scanFile() throws IOException {
     	
@@ -94,8 +91,7 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
     @Override
     public void start(Stage stage) throws Exception {
     	 
-       shooter = new ImageView(new Image("images/shooter.png"));
-       bullet = new ImageView(new Image("images/bullet.jpg"));
+       
        explode = new ImageView(new Image("images/explosion.png"));
        bg = new Image("images/bg.jpg");
        
@@ -103,13 +99,13 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
        
        //Call Splash Screen (need to override launch)
        
-   
-       //Set up the border pane layout
+       
+       //Start timer 
        
        
+       //Setup layout of the canvas
        BorderPane root = new BorderPane();
       
-       
        //Setup the toolbar spacing
        final Pane leftSpace = new Pane();
        HBox.setHgrow(
@@ -117,6 +113,28 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
                Priority.SOMETIMES);
 
        final Pane rightSpace = new Pane();
+       String currentScoreText = Integer.toString(currentScore);
+
+	   //String currentTimeText = new SimpleDateFormat("mm:ss:SSS").format(new Date(currentTime));
+       
+       final Label clock = new Label();
+       final DateFormat format = DateFormat.getInstance();
+       final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler() {
+            public void handle(ActionEvent event) {
+                 final Calendar cal = Calendar.getInstance();
+                 clock.setText(format.format(cal.getTime());
+            }
+
+			@Override
+			public void handle(Event event) {
+				// TODO Auto-generated method stub
+				
+			}
+       });
+                 
+       timeline.setCycleCount(Animation.INDEFINITE);
+       timeline.play();
+      
        
        HBox.setHgrow(
                rightSpace,
@@ -124,10 +142,14 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
 
        final ToolBar toolBar = new ToolBar(
                new Text("Score: "),
+               new Text(currentScoreText),
+               
                leftSpace,
                rightSpace,
-               new Text("Time: "));
+               new Text("Time: "),
+               new Label(clock));
        
+       //Create and style toolbar
        toolBar.getStyleClass().add("toolBar");
        toolBar.setPrefWidth(700);
        toolBar.setPrefHeight(40);
@@ -137,19 +159,27 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
        inputBar.getStyleClass().add("inputBar");
     
      
-       //Create text label
+       //Add label to the input bar
        final Text name = new Text();
        name.setText("Type words here: ");
        name.getText();
-       
-       //Add label to the input bar
-       
        inputBar.getChildren().add(name);
        
        //Add text field for user input 
-       
        final TextField userInput = new TextField();
        inputBar.getChildren().add(userInput);
+       
+       //Check the word matching ENTER pressed 
+       userInput.setOnKeyPressed(new EventHandler<KeyEvent>()
+       {
+           @Override
+           public void handle(KeyEvent ke) {
+               if (ke.getCode().equals(KeyCode.ENTER)) {
+            	   //checkCorrect(); //should be from the method in Player class
+            	   System.out.println(userInput);
+               }
+           }
+       });
        
      
        //Create and style mid-section
@@ -166,8 +196,6 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
        stage.setScene(new Scene(root, 700, 500));
        root.getStylesheets().add(Canvas.class.getResource("TypespeedGame.css").toExternalForm());
        
-       
-       
     
       //Load the audio files
        swoosh = new AudioClip(getClass().getResource("audio/shoot.wav").toString());
@@ -178,15 +206,16 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
 }
 
     
+	
 		public static void pickWords(String[] wordBank) {
 			
-			 //Set up 10 words to be displayed
+			 //Pick 10 words to be displayed
 
 		       String[] wordsArr = new String [10];
 		       int arraySize = wordsArr.length;
 		       int randomIndex = 0;
-		       
 			
+		       //Pick the words randomly from the words.txt file
 		       for (int i = 0; i < arraySize; i++) {
 		    	   
 		    	   randomIndex = (int) (Math.random() * 500);
@@ -194,6 +223,8 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
 		    	   wordsArr[i] = newWord;
 		    	  
 		       }
+		       
+		       //How to make these words show in the gameCenter?
 		      
 		}
 			
@@ -201,6 +232,6 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
 			
 			launch(args);
 		    	      
-		    	    }
+		}
     
  }

@@ -3,32 +3,12 @@ public class Player {
 	
 	//Declare variables for the Player class
 	public String name;
-	public int score;
 	
 	//Constructor for the class
 	public Player(String playerName) {
 		this.name = playerName;
 	}
 	
-	
-	/** These should be put as an event handler under the enter button */
-	
-	int correctCounter = 0;
-	
-	//Method for checking whether the input text matches the word on the screen
-	public static boolean checkCorrect(String inputText, String[] wordsOnScreen) {
-		for (int i = 0; i < wordsOnScreen.length; i++) {
-			if (wordsOnScreen[i].equals(inputText)) {
-				//Return true if the input text matches an element in the array
-				score = score + inputText.length(); //Or add the score later when the shooter already finish the shooting animation?
-				correctCounter++;
-				return true;
-			}
-		}
-		
-		//Return false if there nothing matched in the array
-		return false;
-	}
 	
 	public static void mainCorrect (Target targetWord) {
 		
@@ -45,6 +25,7 @@ public class Player {
 
 			double xCor = targetWord.getXCor();
 			double yCor = targetWord.getYcor();
+			
 			//3. remove it from the wordsOnScreen array
 			
 			for (int i = 0; i < wordsOnScreen.length; i++) {
@@ -62,6 +43,28 @@ public class Player {
 		//Empty the text field for next entry
 		textfieldname.setText("");
 	}
+	
+	
+	//Method for checking whether the input text matches the word on the screen
+	
+	public boolean checkCorrect(String inputText, String[] wordsOnScreen) {
+		
+		int correctCounter = 0;
+		
+		for (int i = 0; i < wordsOnScreen.length; i++) {
+			if (wordsOnScreen[i].equals(inputText)) {
+				
+				//Return true if the input text matches an element in the array
+				currentScore = currentScore + inputText.length(); //can also add this after shooter destroys word
+				correctCounter++;
+				return true;
+			}
+		}
+		
+		//Return false if there nothing matched in the array
+		return false;
+	}
+	
 	
 	public static void checkScore(Target target) {
 		if (correctCounter = 5) {
