@@ -14,9 +14,7 @@ import javafx.animation.*;
 import javafx.event.*;
 import javafx.util.Duration;
 import javafx.scene.media.AudioClip;
-import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import java.io.File;
@@ -49,17 +47,18 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
     private ImageView explode;
     private AudioClip swoosh;
     private AudioClip explosion;
-    private boolean visible;
-    public int currentScore;
-    long currentTime = System.currentTimeMillis();
-
     
+    private boolean isVisible;
+    public int currentScore;
+    
+   
     public static String[] wordBank = new String[500];
     public static String[] wordsOnScreen = new String[500];
 
 	//define file name for the text file to be scanned
 	public static String fileName ="words.txt";
     
+	
 	public void handle(ActionEvent event){
       
      //Make the shooter appear if one word is paused/matched 
@@ -78,6 +77,7 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
    		int wordIndex = 0;
    		
    		//Scan and put the words inside wordBank array
+   		
    		while (scannerForTextFile.hasNextLine()) {
    			wordBank[wordIndex] = scannerForTextFile.nextLine();
    			wordIndex++;
@@ -96,11 +96,7 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
        bg = new Image("images/bg.jpg");
        
        
-       
        //Call Splash Screen (need to override launch)
-       
-       
-       //Start timer 
        
        
        //Setup layout of the canvas
@@ -115,27 +111,6 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
        final Pane rightSpace = new Pane();
        String currentScoreText = Integer.toString(currentScore);
 
-	   //String currentTimeText = new SimpleDateFormat("mm:ss:SSS").format(new Date(currentTime));
-       
-       final Label clock = new Label();
-       final DateFormat format = DateFormat.getInstance();
-       final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler() {
-            public void handle(ActionEvent event) {
-                 final Calendar cal = Calendar.getInstance();
-                 clock.setText(format.format(cal.getTime());
-            }
-
-			@Override
-			public void handle(Event event) {
-				// TODO Auto-generated method stub
-				
-			}
-       });
-                 
-       timeline.setCycleCount(Animation.INDEFINITE);
-       timeline.play();
-      
-       
        HBox.setHgrow(
                rightSpace,
                Priority.SOMETIMES);
@@ -145,9 +120,8 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
                new Text(currentScoreText),
                
                leftSpace,
-               rightSpace,
-               new Text("Time: "),
-               new Label(clock));
+               rightSpace
+               );
        
        //Create and style toolbar
        toolBar.getStyleClass().add("toolBar");
@@ -176,6 +150,7 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
            public void handle(KeyEvent ke) {
                if (ke.getCode().equals(KeyCode.ENTER)) {
             	   //checkCorrect(); //should be from the method in Player class
+            	   
             	   System.out.println(userInput);
                }
            }
@@ -186,8 +161,9 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
        
        HBox gameCenter = new HBox();
        gameCenter.getStyleClass().add("gameCenter");
-
-
+       //need to add moving words to gameCenter  
+       
+       
        //Add boxes to the border pane
        root.setTop(toolBar);
        root.setCenter(gameCenter);
@@ -200,11 +176,32 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
       //Load the audio files
        swoosh = new AudioClip(getClass().getResource("audio/shoot.wav").toString());
        explosion = new AudioClip(getClass().getResource("audio/explosion.wav").toString());
-
+      
        stage.show();
+      
        
 }
+    
+    //Method for animating the words 
+   
+    public void makeWordsMove() {
+    	
+    	//This should be String/ array not rectangle
+    	final Rectangle rectBasicTimeline = new Rectangle(100, 50, 100, 50);
+        rectBasicTimeline.setFill(Color.RED);
+    
+        final Timeline timeline = new Timeline();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.setAutoReverse(true);
+        
+        final KeyValue kv = new KeyValue(rectBasicTimeline.xProperty(), 300);
+        final KeyFrame kf = new KeyFrame(Duration.millis(500), kv);
+       
+        
+        timeline.getKeyFrames().add(kf);
+        timeline.play();
 
+    }
     
 	
 		public static void pickWords(String[] wordBank) {
@@ -225,13 +222,17 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
 		       }
 		       
 		       //How to make these words show in the gameCenter?
+		       
+		     
 		      
 		}
 			
 		public static void main (String[] args) {
 			
 			launch(args);
-		    	      
+			//moveWords();
+			
+		      
 		}
     
  }

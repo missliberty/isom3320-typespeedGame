@@ -6,7 +6,7 @@ public class Shooter extends Canvas {
 	
 	//Set up the starting variables
 	
-	private boolean visible; 
+	private boolean isVisible; 
 	private int x, y; //position where the shooter appears
 	private int wordX, wordY; // get the position of the target
 	
@@ -28,40 +28,44 @@ public class Shooter extends Canvas {
 	
 	public void showShooter(){
 		
-		boolean isVisible = false; //by default the shooter is invisible 
-		
-		if () /** word is correctly inputted by user**/ {
-			
 			isVisible = true;
+			//show shooter image 
+			
 			
 			//How to link to actual Canvas? 
-			
 			Canvas.root.inputBar.getChildren().addAll(shooter, bullet);
 			
 			
-			startX = getWordX(); //get the X position of the currently paused word 
-			startY = 0; // show the Shooter on the bottom of the Canvas
-		}
 	}
 	
 	//A method that shoots the bullet
 	
-	public void shoot() {
-		 
-		 ImageView bullet = new ImageView(new Image(getClass().getResourceAsStream("images/bullet.jpg")));
-		 getX();
-		 getY();
-		 
+	private int direction, speed;
+
+	public void shoot(int dir) {
 		
-		 
-		 //make canvas show the image 
+		ImageView bullet = new ImageView(new Image(getClass().getResourceAsStream("images/bullet.jpg")));
+
+		        direction = dir;
+		        speed = 15;
+		    }
+		    
+	public void act() {
+        setLocation(getX(), getY());
+        setRotation(direction);
+        move();
+    }
 		
-		}
-		//show bullet image
-		//set target 
-		//automatically shoot when target identified 
-		//hide bullet
-		//show explosion with sound
+	
+	private void move() {
+		
+	}
+
+	private void setRotation(int direction2) {
+		
+	}
+
+	private void setLocation(int x2, int y2) {
 		
 	}
 	
