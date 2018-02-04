@@ -2,8 +2,8 @@
 
 .gameCenter {
      -fx-background-image: url(/images/bg.jpg);
-     width: 100%;
-     background-repeat: no-repeat;
+     -fx-width:100%;
+
 }
 
 .inputBar {
@@ -21,6 +21,8 @@
 .hbox {
 	-fx-background-color: white;
   font-family: Avenir;
+  font-size: 24px;
+  position: absolute;
 }
 
 

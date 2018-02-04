@@ -21,6 +21,7 @@ public class SplashScreen extends Application {
   private static final int SPLASH_WIDTH = 700;
   private static final int SPLASH_HEIGHT = 500;
 
+  //Create main method that overrides Canvas main method
   public static void main(String[] args) throws Exception { launch(args); }
 
   @Override public void init() {
@@ -33,12 +34,12 @@ public class SplashScreen extends Application {
     iv1.setImage(image);
     iv1.setPreserveRatio(true);
 
+    //Add START GAME button
     Button button = new Button("START GAME");
-    button.setContentDisplay(ContentDisplay.TOP);
 
     StackPane stackPane = new StackPane();
-    stackPane.getChildren().addAll(iv1, button); 
-
+    stackPane.getChildren().addAll(iv1, button);
+    
     splashLayout = new HBox();
     splashLayout.getChildren().add(stackPane);
 

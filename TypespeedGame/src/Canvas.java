@@ -2,6 +2,7 @@ import javafx.scene.shape.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
@@ -17,6 +18,7 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.geometry.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -44,64 +46,25 @@ import javafx.scene.text.TextAlignment;
 public class Canvas extends Application implements EventHandler<ActionEvent> {
  
     private Image bg;
-    private ImageView explode;
-    private AudioClip swoosh;
-    private AudioClip explosion;
-    
-    private boolean isVisible;
-    public int currentScore;
-    
+    public static boolean isSuccess = false;
    
-    public static String[] wordBank = new String[500];
-    public static String[] wordsOnScreen = new String[500];
-
-	//define file name for the text file to be scanned
-	public static String fileName ="words.txt";
+    UpdateTargets updateTargets;
     
-	
-	public void handle(ActionEvent event){
-      
-     //Make the shooter appear if one word is paused/matched 
-     //Make the bullet move + play sound
-     //Show explosion + play sound
-		
-	
-}
-    public static void scanFile() throws IOException {
-    	
-   		
-   		//Declare scanner to scan the words.txt file
-   		Scanner scannerForTextFile = new Scanner(new File(fileName));
-   		
-   		//counter for indicating the array index of each item
-   		int wordIndex = 0;
-   		
-   		//Scan and put the words inside wordBank array
-   		
-   		while (scannerForTextFile.hasNextLine()) {
-   			wordBank[wordIndex] = scannerForTextFile.nextLine();
-   			wordIndex++;
-   		}
-   		
-   		//close the scanner
-   		scannerForTextFile.close();
-   		
-   	}
+    public void handle(ActionEvent event){
+        
+        //Make the shooter appear if one word is paused/matched 
+        //Make the bullet move + play sound
+        //Show explosion + play sound
+   }
    	
     @Override
     public void start(Stage stage) throws Exception {
     	 
-       
-       explode = new ImageView(new Image("images/explosion.png"));
        bg = new Image("images/bg.jpg");
-       
-       
-       //Call Splash Screen (need to override launch)
-       
-       
+   
        //Setup layout of the canvas
        BorderPane root = new BorderPane();
-      
+  
        //Setup the toolbar spacing
        final Pane leftSpace = new Pane();
        HBox.setHgrow(
@@ -109,16 +72,16 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
                Priority.SOMETIMES);
 
        final Pane rightSpace = new Pane();
-       String currentScoreText = Integer.toString(currentScore);
+       
 
        HBox.setHgrow(
                rightSpace,
                Priority.SOMETIMES);
-
+       Text scoreText = new Text("0");
+       
        final ToolBar toolBar = new ToolBar(
                new Text("Score: "),
-               new Text(currentScoreText),
-               
+               scoreText,
                leftSpace,
                rightSpace
                );
@@ -151,7 +114,16 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
                if (ke.getCode().equals(KeyCode.ENTER)) {
             	   //checkCorrect(); //should be from the method in Player class
             	   
-            	   System.out.println(userInput);
+            	   System.out.println(userInput.getText());
+            	   Target target = Target.targets.get(userInput.getText());
+	            	   if(target != null) {
+	            		   System.out.println("success");
+	            		   Target.targets.remove(target.word);
+	            		   isSuccess = true;
+	            		   userInput.setText("");
+	            		   updateTargets.currentScore += 25;
+	            		   Platform.runLater(updateTargets);
+	            	   }
                }
            }
        });
@@ -160,9 +132,8 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
        //Create and style mid-section
        
        HBox gameCenter = new HBox();
+       gameCenter.setPadding(new Insets(40, 0, 0, 20));
        gameCenter.getStyleClass().add("gameCenter");
-       //need to add moving words to gameCenter  
-       
        
        //Add boxes to the border pane
        root.setTop(toolBar);
@@ -170,69 +141,30 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
        root.setBottom(inputBar);
            
        stage.setScene(new Scene(root, 700, 500));
+       //stage.setResizable(false);
        root.getStylesheets().add(Canvas.class.getResource("TypespeedGame.css").toExternalForm());
        
-    
-      //Load the audio files
-       swoosh = new AudioClip(getClass().getResource("audio/shoot.wav").toString());
-       explosion = new AudioClip(getClass().getResource("audio/explosion.wav").toString());
       
        stage.show();
+       
+       updateTargets = new UpdateTargets(gameCenter);
+       updateTargets.setScoreText(scoreText);
+       updateTargets.setup();
+       
+       Platform.runLater(updateTargets);
       
        
+       //boolean whileRunning = true;
+       //while (whileRunning) {
+    	   
+	    	   //Thread.sleep(50);
+       //}
 }
-    
-    //Method for animating the words 
-   
-    public void makeWordsMove() {
-    	
-    	//This should be String/ array not rectangle
-    	final Rectangle rectBasicTimeline = new Rectangle(100, 50, 100, 50);
-        rectBasicTimeline.setFill(Color.RED);
-    
-        final Timeline timeline = new Timeline();
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.setAutoReverse(true);
-        
-        final KeyValue kv = new KeyValue(rectBasicTimeline.xProperty(), 300);
-        final KeyFrame kf = new KeyFrame(Duration.millis(500), kv);
-       
-        
-        timeline.getKeyFrames().add(kf);
-        timeline.play();
 
-    }
-    
-	
-		public static void pickWords(String[] wordBank) {
-			
-			 //Pick 10 words to be displayed
-
-		       String[] wordsArr = new String [10];
-		       int arraySize = wordsArr.length;
-		       int randomIndex = 0;
-			
-		       //Pick the words randomly from the words.txt file
-		       for (int i = 0; i < arraySize; i++) {
-		    	   
-		    	   randomIndex = (int) (Math.random() * 500);
-		    	   String newWord = wordBank[randomIndex];
-		    	   wordsArr[i] = newWord;
-		    	  
-		       }
-		       
-		       //How to make these words show in the gameCenter?
-		       
-		     
-		      
-		}
-			
-		public static void main (String[] args) {
-			
-			launch(args);
-			//moveWords();
-			
-		      
+		
+		       //How to make these words show in the gameCenter		
+		public static void main (String[] args) {		
+			launch(args);	      
 		}
     
  }

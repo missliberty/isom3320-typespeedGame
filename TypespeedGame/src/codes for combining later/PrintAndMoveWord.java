@@ -8,6 +8,7 @@ public class PrintAndMoveWord implements Runnable {
 	
 	/** These need to be in the main class for handling these thread*/
 	//Create a thread array to manage all the array
+	
 	public static Thread[] wordThreadArray = new Thread[500];
 	//Create an array to store all the word comntent that each thread are dealing with
 	public static String[] wordOnEachThread = new String[500];

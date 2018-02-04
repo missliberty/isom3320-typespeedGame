@@ -1,131 +1,104 @@
+import java.io.File;
+import java.io.IOException;
 import java.lang.*;
 import java.util.*;
 import java.util.concurrent.*; //for multi-threading use
+
+import javafx.event.ActionEvent;
+
 import java.lang.*; //for random pick use
+
 
 public class Target {
 	
 	//Declare variables for the class
-<<<<<<< HEAD
-	public static double xCor;
-	public static double yCor;
-	public double duration; // duration for the target a crossing the screen (in millisecs)
-=======
+
 	public double xCor;
 	public double yCor;
-	public double duration; // duration for the target acrossing the screen (in millisecs)
-	public boolean isPause;
+	public double dXCor;
+	public double dYCor;
+	public String word;
+	public boolean isRendered;
 	
-	/** these variables might need to move to the canvas class*/
-	public String[] wordsOnScreen = new String[500];
-	public boolean[] onScreenWordsOccupied = new boolean[500]; /*Since onScreenWords can be repeated, it is needed to record
-	all the targets on screen */
-	public String[] wordBank = new String[500];
 	
+	//Constructor
+	public Target(String word) {
+		this.word = word;
+		this.xCor = Math.random()*480;
+		this.yCor = Math.random()*480;
+		double theta = Math.random()*2*Math.PI;
+		this.dXCor = Math.cos(theta);
+		this.dYCor = Math.sin(theta);
+		this.isRendered = false;
+				
+	}
+	
+	public double duration; // duration for the target a crossing the screen (in millisecs)
+	public boolean isPaused;
+
+    
+	public static List<String> wordBank= new ArrayList<String>();
+    public static String[] wordsOnScreen = new String[10];
 
 	//define file name for the text file to be scanned
-	public static String fileName = "words.txt"; 
-	
-	//THIS FOR LOOP SHOULD BE INSIDE A METHOD TO REMOVE ERROR
-	//Initialize the variables
-	for (int i = 0; i < onScreenWordsOccupied.length; i++) {
-		onScreenWordsOccupied[i] = false;
-	}
-	
->>>>>>> origin/master
-	
-	//Constructor 
-	public Target() {
-	}
-	
-	
-	/*
-	//Override the run() method in Runnable interface
-	@Override
-	public void run() {
-	
-	}
-	
-	*/
-
-<<<<<<< HEAD
-	//moved word bank to canvas 
-=======
-	//Scan word from the text file
-	public static void scanFile() throws IOException {
+	public static String fileName ="/tmp/words.txt";
+    
+	public void handle(ActionEvent event){
+      
+     //Make the shooter appear if one word is paused/matched 
+     //Make the bullet move + play sound
+     //Show explosion + play sound
 		
-		//Declare scanner to scan the words.txt file
-		Scanner scannerForTextFile = new Scanenr(new File(fileName));
-		
-		//counter for indicating the array index of each item
-		public static int wordIndex = 0;
-		
-		//Scan and put the words inside wordBank array
-		while (scannerForTextFile.hasNextLine()) {
-			wordBank[wordIndex] = scannerForTextFile.nextLine();
-			wordIndex++;
-		}
-		
-		//close the scanner
-		scannerForTextFile.close();
-		
-	}
->>>>>>> origin/master
-	
-	/** Multi threading for picking few words as target*/
-	/*
-	//Create executor for handling thread pool
-	ExecutorService executor = Executors.newFixedThreadPool(3);
-	
-	//Submit runnable task to the executor
-	//executor.execute(void printWord1());
-	
-	//Close the executor
-<<<<<<< HEAD
-	//executor.shutdown();
-=======
-	executor.shutdown();
-	*/
-	
-	
-	
-	//Method for printing the words
-	public static void printWord() {
-		String wordToBePrinted = pickWords(wordBank);
-		
-		//Put words inside the words on screen array
-		int counter = 0;
-		for (int i = 0; i < wordsOnScreen.length; i++) {
-			if (onScreenWordsOccupied[i] == false) {
-				onScreenWordsOccupied[i] = true;
-				wordsOnScreen[i] = wordToBePrinted;
-				break;
-			}
-		}
-		
-		//Print the word on the screen with a duration
-		
-		
-	}
-	
-	//Picking the word to be printed randomly from the word bank
-	
-	public static String pickWords(String[] wordBank) {
-		//Generate a random number from 0 to 499
-		int randomIndex = (int) (Math.random() * 500);
-		reutrn wordBank[randomIndex];
-		
-	}
-	
-	//Get method for X coordinate
-	public double getXCor() {
-		return xCor;
-	}
-	
-	//Get method for Y coordinate
-	public double getYCor() {
-		return yCor;
-	}
-
->>>>>>> origin/master
 }
+	public void update() {
+		
+		this.xCor += this.dXCor;
+		this.yCor += this.dYCor;
+	}
+	
+    public static void setup() { 	
+   		try {
+	   		//Declare scanner to scan the words.txt file
+	   		Scanner scannerForTextFile = new Scanner(new File(fileName));
+	   		
+	   		//Scan and put the words inside wordBank array
+	   		
+	   		while (scannerForTextFile.hasNextLine()) {
+	   			wordBank.add(scannerForTextFile.nextLine());
+	   	
+	   		}
+	   		
+	   		//close the scanner
+	   		scannerForTextFile.close();
+   		} catch (IOException e) {
+   			wordBank.add("no");
+   			wordBank.add("file");
+   			wordBank.add("found");
+   			wordBank.add("#loser");
+   		}
+   	}
+    
+    
+    public static Map<String, Target> targets = new HashMap<String, Target>();
+    
+    public static void setupTargets(int numTargets) {
+	    for(int i = 0; i < numTargets; i++) {
+	    		Target newTarget = Target.getRandomTarget();
+	    		targets.put(newTarget.word, newTarget);
+	    		
+	    }
+    }
+
+    public static Target getRandomTarget() {
+	       int randomIndex = (int) (Math.floor(Math.random() * wordBank.size())); 
+	       String randomWord = wordBank.get(randomIndex);
+	       return new Target(randomWord);
+    }
+    
+    public static Collection<Target> getTargets() {
+    		return Target.targets.values();
+    	
+    }
+}
+   
+	

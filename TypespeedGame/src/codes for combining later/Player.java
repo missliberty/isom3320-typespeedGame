@@ -12,12 +12,15 @@ public class Player {
 	
 	
 	/** These should be put as an event handler under the enter button */
+	
 	int correctCounter = 0;
 	
 	GameInit.userInput.setOnAction( e -> {
+		
 		if ( e.getCode() == KeyCode.ENTER) {
+			
 			//Check whether the input is correct
-			boolean isCorrect = checkCorrect(GameInit.userInput.getText(), Target.targetsOnScreen);
+			boolean isCorrect = checkCorrect(Canvas.userInput.getText(), Target.targetsOnScreen);
 			
 			//Create temp target to find the target that contains the userInput.text
 			Target tempTarget;
@@ -33,7 +36,7 @@ public class Player {
 			if (isCorrect) mainCorrect(tempTarget); //Need to add an argument for calling this method, how to pass that particular target into it?
 			
 			//Empty the text field for next entry
-			GameInit.userInput.setText("");
+			Canvas.userInput.setText("");
 		}
 		
 	})
