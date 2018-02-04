@@ -1,14 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu');
+
 .gameCenter {
      -fx-background-image: url(/images/bg.jpg);
      width: 100%;
      background-repeat: no-repeat;
-}
-
-.label {
-    -fx-font-size: 12px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #333333;
-    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
 }
 
 .inputBar {
@@ -29,11 +24,16 @@
 }
 
 
-#welcome-text {
-   -fx-font-size: 32px;
-   -fx-font-family: "Arial Black";
-   -fx-fill: #818181;
-   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
-}
+#wordStyle {
+   -fx-font-size: 24px;
+   -fx-font-family: "Ubuntu";
+   -fx-stroke: black;
+   -fx-fill: black;
+ }
+
+ #userInputRect {
+
+  
+ }
 
 

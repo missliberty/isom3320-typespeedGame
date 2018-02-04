@@ -32,14 +32,9 @@ public class SplashScreen extends Application {
     ImageView iv1 = new ImageView();
     iv1.setImage(image);
     iv1.setPreserveRatio(true);
-   // iv1.setFitHeight(x);
-   // iv1.setFitWidth(y);
 
     Button button = new Button("START GAME");
-    button.setTranslateX(10);
-    button.setTranslateY(10);
     button.setContentDisplay(ContentDisplay.TOP);
-
 
     StackPane stackPane = new StackPane();
     stackPane.getChildren().addAll(iv1, button); 

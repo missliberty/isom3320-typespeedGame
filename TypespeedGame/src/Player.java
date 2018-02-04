@@ -74,13 +74,16 @@ public class Player {
 	
 	/**Leaderboard Stuff, which should be also placed in the canvas class */
 	
-	//crearte player array for storing the name and score for all player
+	//Create player array for storing the name and score for all player
 	//Push player data into this array when gameover
+	
 	Player[] players = new Player[10000];
 	Player[] topThree = new Player[3];
 	
 	//method for sorting the top 3 players in the game
+	
 	public static void sortTopThree (Player[] players) {
+		
 		//Declare variable for storing the largest score that scanned
 		int prevLargestScore = -9999;
 		String prevLargestName = "";
@@ -120,12 +123,6 @@ public class Player {
 			maxIndex = -1;
 			prevLargestScore = -9999;
 		}
-	}
-	
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
 	}
 
 }
