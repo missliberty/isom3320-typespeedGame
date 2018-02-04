@@ -50,6 +50,7 @@ public class UpdateTargets implements Runnable {
 		
 		for(Target aTarget : Target.getTargets()) {
 			Text t = new Text(aTarget.word);
+			t.setId("wordStyle");
 			t.setX(aTarget.xCor);
 			t.setY(aTarget.yCor);
 			g.getChildren().add(t);
