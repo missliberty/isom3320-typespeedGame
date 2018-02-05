@@ -37,12 +37,10 @@ public class Target {
 	public double duration; // duration for the target a crossing the screen (in millisecs)
 	public boolean isPaused;
 
-    
 	public static List<String> wordBank= new ArrayList<String>();
-    public static String[] wordsOnScreen = new String[10];
 
 	//define file name for the text file to be scanned
-	public static String fileName ="/tmp/words.txt";
+	public static String fileName ="./words.txt";
     
 	public void handle(ActionEvent event){
       
@@ -83,7 +81,7 @@ public class Target {
     public static void setup() { 	
    		try {
 	   		//Declare scanner to scan the words.txt file
-	   		Scanner scannerForTextFile = new Scanner(new File(fileName));
+	   		Scanner scannerForTextFile = new Scanner(new File(ClassLoader.getSystemResource("words.txt").toURI()));
 	   		
 	   		//Scan and put the words inside wordBank array
 	   		
@@ -93,7 +91,7 @@ public class Target {
 	   		
 	   		//close the scanner
 	   		scannerForTextFile.close();
-   		} catch (IOException e) {
+   		} catch (Exception e) {
    			wordBank.add("no");
    			wordBank.add("file");
    			wordBank.add("found");
@@ -104,10 +102,15 @@ public class Target {
     public static Map<String, Target> targets = new HashMap<String, Target>();
     
     public static void setupTargets(int numTargets) {
-	    for(int i = 0; i < numTargets; i++) {
+    		int numTargetsAdded = 0;
+    		numTargets = Math.min(numTargets,  wordBank.size());
+	    while(numTargetsAdded < numTargets) {
 	    		Target newTarget = Target.getRandomTarget();
-	    		targets.put(newTarget.word, newTarget);
-	    		
+
+	    		if (targets.get(newTarget.word) == null) {
+	    			targets.put(newTarget.word, newTarget);
+	    			numTargetsAdded++;
+	    		}
 	    }
     }
 

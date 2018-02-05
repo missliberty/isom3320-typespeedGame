@@ -58,7 +58,7 @@ public class Shooter extends Canvas {
 	
 		//Add bullet image
 		spBullet = new StackPane();
-		Image bullet = new Image("images/bullet.jpg");
+		Image bullet = new Image("images/bullet.png");
 		ivBullet = new ImageView();
 		ivBullet.setImage(bullet);
 		ivBullet.setFitWidth(25);
@@ -89,12 +89,13 @@ public class Shooter extends Canvas {
 	    
 	    gShooter.setTranslateX(parentWidth/2);
 	    gShooter.setTranslateY(parentHeight - spShooter.getHeight());
+	    parent.getChildren().add(spBullet);
 	    
 	    Group gBullet = new Group();
 	    gBullet.getChildren().add(spBullet);
 	    parent.getChildren().add(gBullet);
 
-		gBullet.setTranslateX(bulletX*parentWidth/100 - ivBullet.getLayoutBounds().getWidth()/2);
+		gBullet.setTranslateX(bulletX*parentWidth/100 - ivBullet.getLayoutBounds().getWidth());
 		gBullet.setTranslateY(bulletY*parentHeight/100 - ivBullet.getLayoutBounds().getWidth()/2);
 		//ivBullet.setRotate(bulletTheta/Math.PI * 180);
 	}
@@ -102,7 +103,8 @@ public class Shooter extends Canvas {
 	public boolean updateBullet() {
 		bulletX += bulletDX;
 		bulletY += bulletDY;
-		return targetDistance-- < -1;
+		targetDistance -= 2;
+		return targetDistance < -1;
 	}
 	
 	public void reset(Target target) {
@@ -116,6 +118,10 @@ public class Shooter extends Canvas {
 		bulletDY /= targetDistance;
 		
 		bulletTheta = Math.atan2(-bulletDY, bulletDX);
+		
+		bulletDX *= 2;
+		bulletDY *= 2;
+
 		mediaPlayer.stop();
 		mediaPlayer.play();
 	}

@@ -122,8 +122,7 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
                }
            }
        });
-       
-     
+
        //Create and style mid-section
        
        HBox gameCenter = new HBox();
@@ -164,9 +163,9 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
        }).start();  
 }
 
-		       //How to make these words show in the gameCenter		
-		public static void main (String[] args) {		
-			launch(args);	      
-		}
+	//How to make these words show in the gameCenter		
+	public static void main (String[] args) {		
+		launch(args);	      
+	}
     
  }
