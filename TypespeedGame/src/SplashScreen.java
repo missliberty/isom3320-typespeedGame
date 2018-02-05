@@ -12,13 +12,16 @@ public class SplashScreen {
  
   private Button startButton;
 
-  Image splashImage = new Image("http://i65.tinypic.com/6p7zm0.png");
+  Image splashImage = new Image("images/splashImage.png");
   ImageView iv1 = new ImageView();
 
   public SplashScreen(UpdateGame updateGame) {
 	  iv1.setImage(splashImage);
 	  iv1.setPreserveRatio(true);
+	  iv1.fitWidthProperty();
+	  
 	  startButton = new Button("START GAME");
+	  startButton.setId("buttonStyle");
 	  
 	  startButton.setOnMousePressed(new EventHandler<MouseEvent>()
       {
@@ -36,6 +39,6 @@ public class SplashScreen {
     stackPane.getChildren().addAll(iv1, gButton);
     parent.getChildren().add(stackPane);
 
-    gButton.setTranslateY(parent.getHeight()/2 - startButton.getLayoutBounds().getHeight());
+    gButton.setTranslateY(parent.getHeight()/3 - startButton.getLayoutBounds().getHeight());
   }
 }

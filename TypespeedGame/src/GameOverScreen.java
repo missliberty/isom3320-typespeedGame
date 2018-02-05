@@ -19,6 +19,7 @@ public class GameOverScreen {
 		  iv1.setImage(endImage);
 		  iv1.setPreserveRatio(true);
 		  restartButton = new Button("PLAY AGAIN");
+		  restartButton.setId("buttonStyleRestart");
 		  restartButton.setOnMousePressed(new EventHandler<MouseEvent>() //restart the game when pressed
 		  
 	      {
