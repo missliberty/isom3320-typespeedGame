@@ -1,9 +1,6 @@
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
@@ -14,39 +11,27 @@ import java.io.File;
 public class Shooter extends Canvas {
 	
 	//Set up the starting variables
-	
-	public boolean isVisible;
-	public boolean isShooterVisible;
-	public boolean isBulletVisible;
-	public boolean isExplodeVisible;
-	
+
 	private double bulletX, bulletY, bulletDX, bulletDY, bulletTheta, targetDistance; 
 	
 	Target target;
 	
-	//bullet variables
-
+	//Image variables
 	private ImageView ivShooter; 
     private ImageView ivBullet;
-    private ImageView ivExplode;
     
-    private AudioClip swoosh;
-    private AudioClip explosion;
-    
+    //Load bullet shooting sound
     String musicFile = "src/audio/explode.mp3";
-
     Media sound = new Media(new File(musicFile).toURI().toString());
     MediaPlayer mediaPlayer = new MediaPlayer(sound);
   
-    
+    //Setup stack pane for dynamic elements 
     StackPane spShooter;
     StackPane spBullet;
-    StackPane spExplode;
     
 
 	public Shooter() {
 	 
-		
 		//Add shooter image
 		spShooter = new StackPane();
 		Image shooter = new Image("images/shooter.png");
@@ -64,21 +49,9 @@ public class Shooter extends Canvas {
 		ivBullet.setFitWidth(25);
 		ivBullet.setPreserveRatio(true);
 		spBullet.getChildren().addAll(ivBullet);
-		
-		//Add explosion image
-		spExplode = new StackPane();
-		Image explode = new Image("images/explosion.png");
-		ivExplode = new ImageView();
-		ivExplode.setFitWidth(30);
-		ivExplode.setImage(explode);
-		ivExplode.setFitWidth(30);
-		ivExplode.setPreserveRatio(true);
-		spExplode.getChildren().addAll(ivExplode);
-		 
 	}
 	
-	//A method that makes the shooter appear on the screen 
-	
+	//Make shooter and bullet appear on the screen
 	public void show(Pane parent){  
 		Group gShooter = new Group();
 		gShooter.getChildren().add(spShooter);
@@ -100,6 +73,7 @@ public class Shooter extends Canvas {
 		//ivBullet.setRotate(bulletTheta/Math.PI * 180);
 	}
 	
+	//Make the bullet move towards the matched word
 	public boolean updateBullet() {
 		bulletX += bulletDX;
 		bulletY += bulletDY;
@@ -107,6 +81,7 @@ public class Shooter extends Canvas {
 		return targetDistance < -1;
 	}
 	
+	//Animate words on screen
 	public void reset(Target target) {
 		this.target = target;
 		bulletX = 50;
@@ -116,24 +91,14 @@ public class Shooter extends Canvas {
 		targetDistance = Math.sqrt(bulletDX*bulletDX + bulletDY*bulletDY);
 		bulletDX /= targetDistance;
 		bulletDY /= targetDistance;
-		
 		bulletTheta = Math.atan2(-bulletDY, bulletDX);
-		
 		bulletDX *= 2;
 		bulletDY *= 2;
 
+		//Refresh the audio file 
 		mediaPlayer.stop();
 		mediaPlayer.play();
 	}
-	
-		
-	public void explode(Pane parent){
-		
-		parent.getChildren().addAll(spExplode);
-		    
-    }
-	
-	
 	
 	
 }

@@ -1,13 +1,5 @@
 import java.io.File;
-import java.io.IOException;
-import java.lang.*;
 import java.util.*;
-import java.util.concurrent.*; //for multi-threading use
-
-import javafx.event.ActionEvent;
-
-import java.lang.*; //for random pick use
-
 
 public class Target {
 	

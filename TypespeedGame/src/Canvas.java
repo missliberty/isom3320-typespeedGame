@@ -15,7 +15,6 @@
  *  
  */
 
-
 import javafx.scene.shape.*;
 import javafx.scene.text.Text;
 import javafx.scene.input.KeyCode;
