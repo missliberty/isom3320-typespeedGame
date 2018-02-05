@@ -18,7 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 
 public class SplashScreen {
-  private Pane splashLayout;
+ 
   private Button startButton;
 
   Image splashImage = new Image("http://i65.tinypic.com/6p7zm0.png");

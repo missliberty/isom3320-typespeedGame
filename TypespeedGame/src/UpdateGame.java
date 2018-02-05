@@ -14,11 +14,13 @@ public class UpdateGame implements Runnable {
 	public int currentScore = 0;
 	Shooter shooter;
 	SplashScreen splashScreen;
+	GameOverScreen gameOverScreen;
 	
 	public UpdateGame (Pane parent) {
 		this.parent = parent;
 		this.shooter = new Shooter();
 		this.splashScreen = new SplashScreen(this);
+		this.gameOverScreen = new GameOverScreen(this);
 		this.gameState = GameState.SPLASH;
 	}
 	
@@ -29,6 +31,11 @@ public class UpdateGame implements Runnable {
 		
 				if (gameState == GameState.SPLASH) {
 					splashScreen.show(this.parent);
+					return;
+				}
+				
+				if (gameState == GameState.GAMEOVER) {
+					gameOverScreen.show(this.parent);
 					return;
 				}
 
@@ -54,6 +61,9 @@ public class UpdateGame implements Runnable {
 					if (hit) {
 						gameState = GameState.PLAYING;
 						Target.targets.remove(this.shooter.target.word);
+					}
+					if (Target.targets.size()==0) {
+						gameState = GameState.GAMEOVER;
 					}
 				}
 	}
