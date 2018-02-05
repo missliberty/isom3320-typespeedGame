@@ -64,6 +64,9 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
    
        //Setup layout of the canvas
        BorderPane root = new BorderPane();
+       root.setMaxHeight(500);
+       root.setMinHeight(500);
+       root.setPrefHeight(500);
   
        //Setup the toolbar spacing
        final Pane leftSpace = new Pane();
@@ -122,7 +125,7 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
 	            		   isSuccess = true;
 	            		   userInput.setText("");
 	            		   updateTargets.currentScore += 25;
-	            		   Platform.runLater(updateTargets);
+	            		   //Platform.runLater(updateTargets);
 	            	   }
                }
            }
@@ -132,8 +135,12 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
        //Create and style mid-section
        
        HBox gameCenter = new HBox();
-       gameCenter.setPadding(new Insets(40, 0, 0, 20));
+       //gameCenter.setPadding(new Insets(40, 0, 0, 20));
        gameCenter.getStyleClass().add("gameCenter");
+       gameCenter.setMaxWidth(700);
+       gameCenter.setMinWidth(700);
+       gameCenter.setPrefWidth(700);
+ 
        
        //Add boxes to the border pane
        root.setTop(toolBar);
@@ -153,15 +160,19 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
        
        Platform.runLater(updateTargets);
       
-       
-       //boolean whileRunning = true;
-       //while (whileRunning) {
-    	   
-	    	   //Thread.sleep(50);
-       //}
+       new Thread(new Runnable() {
+    	   	@Override public void run() {
+    	   		try {
+	    	   		while(stage.isShowing()) {
+	    	   			Platform.runLater(updateTargets);
+	    	   		
+	    	   			Thread.sleep(50);
+	    	   		}
+    	   		} catch (InterruptedException e) {}
+    	   	}
+       }).start();  
 }
 
-		
 		       //How to make these words show in the gameCenter		
 		public static void main (String[] args) {		
 			launch(args);	      

@@ -85,10 +85,9 @@ public class Shooter extends Canvas {
 	    
 	    //Condition: if word is matched -> show shooter
 	    //if (Canvas.isSuccess = true)
-	    		parent.getChildren().addAll(spShooter);
+	    //parent.getChildren().addAll(spShooter);
 	    //isShooterVisible = true;
-	    
-		
+	  
 	}
 	
 	//A method that shoots the bullet

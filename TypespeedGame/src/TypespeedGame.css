@@ -3,7 +3,9 @@
 .gameCenter {
      -fx-background-image: url(/images/bg.jpg);
      -fx-width:100%;
-
+     -fx-height:100%;
+     padding: 0px;
+     position: absolute;
 }
 
 .inputBar {

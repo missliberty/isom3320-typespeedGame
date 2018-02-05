@@ -12,11 +12,11 @@ import java.lang.*; //for random pick use
 public class Target {
 	
 	//Declare variables for the class
-
 	public double xCor;
 	public double yCor;
 	public double dXCor;
 	public double dYCor;
+	public double targetWidth;
 	public String word;
 	public boolean isRendered;
 	
@@ -24,8 +24,9 @@ public class Target {
 	//Constructor
 	public Target(String word) {
 		this.word = word;
-		this.xCor = Math.random()*480;
-		this.yCor = Math.random()*480;
+		this.xCor = Math.random()*100;
+		this.yCor = Math.random()*100;
+		this.targetWidth = 1;
 		double theta = Math.random()*2*Math.PI;
 		this.dXCor = Math.cos(theta);
 		this.dYCor = Math.sin(theta);
@@ -51,9 +52,32 @@ public class Target {
 		
 }
 	public void update() {
-		
 		this.xCor += this.dXCor;
 		this.yCor += this.dYCor;
+	
+		
+		if (xCor < 0) {
+			
+			dXCor = -dXCor;
+			xCor = 1;
+			
+		}
+			
+		if (xCor + targetWidth > 100) {
+			dXCor = -dXCor;
+			xCor = 99 - targetWidth;
+			
+		}
+		
+		if (yCor < 0) {
+			dYCor = -dYCor;
+			yCor = 1;
+		}
+			
+		if (yCor > 100) {
+			dYCor = -dYCor;
+			yCor = 99;
+		}
 	}
 	
     public static void setup() { 	
@@ -65,7 +89,6 @@ public class Target {
 	   		
 	   		while (scannerForTextFile.hasNextLine()) {
 	   			wordBank.add(scannerForTextFile.nextLine());
-	   	
 	   		}
 	   		
 	   		//close the scanner
@@ -77,7 +100,6 @@ public class Target {
    			wordBank.add("#loser");
    		}
    	}
-    
     
     public static Map<String, Target> targets = new HashMap<String, Target>();
     
