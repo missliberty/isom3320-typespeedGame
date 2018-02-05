@@ -1,53 +1,43 @@
+// Title:       ISOM 3320: Group Project
+// Semester:    Winter 2017/18
+// Author1:     SOBANSKA, Sandra Anna (sasobanska@connect.ust.hk)
+// Author2:	    WONG, Tin Long (tlwongai@connect.ust.hk)
+//Project Name: Typespeed Challenge
+
+/*
+ * This game commands the user to properly type in the words
+ * which are animated on the screen in order to score points. 
+ * Player should input the word and press Enter in order to score. 
+ * The word will be destroyed automatically if correct and each word 
+ * adds 25 points to score. The game ends when the player shoots down 
+ * all the words on screen. 
+ * Good luck! 
+ *  
+ */
+
+
 import javafx.scene.shape.*;
+import javafx.scene.text.Text;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToolBar;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
 import javafx.scene.image.*;
-import javafx.animation.*;
 import javafx.event.*;
-import javafx.util.Duration;
-import javafx.scene.media.AudioClip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.geometry.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Scanner;
-import javafx.scene.control.Label;
-import javafx.beans.property.ReadOnlyIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
-import javafx.scene.control.Label;
-import javafx.scene.control.ToolBar;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
 
 public class Canvas extends Application implements EventHandler<ActionEvent> {
  
-    private Image bg;
-    public static boolean isSuccess = false;
-   
+    //Initialize variables
+	private Image bg; 
     UpdateGame updateGame;
     
     public void handle(ActionEvent event){
@@ -105,15 +95,14 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
        final TextField userInput = new TextField();
        inputBar.getChildren().add(userInput);
        
-       //Check the word matching ENTER pressed 
+       //Check the word when ENTER pressed 
        userInput.setOnKeyPressed(new EventHandler<KeyEvent>()
        {
            @Override
            public void handle(KeyEvent ke) {
                if (ke.getCode().equals(KeyCode.ENTER)) {
-            	   //checkCorrect(); //should be from the method in Player class
             	   
-            	   System.out.println(userInput.getText());
+            	   //System.out.println(userInput.getText());
             	   Target target = Target.targets.get(userInput.getText());
             	   userInput.setText("");
 	            	   if(target != null) {
@@ -123,33 +112,33 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
            }
        });
 
-       //Create and style mid-section
-       
+       //Create and style mid-section of the borderpane
        HBox gameCenter = new HBox();
-       //gameCenter.setPadding(new Insets(40, 0, 0, 20));
        gameCenter.getStyleClass().add("gameCenter");
        gameCenter.setMaxWidth(700);
        gameCenter.setMinWidth(700);
        gameCenter.setPrefWidth(700);
  
-       //Add boxes to the border pane
+       //Add parts to the border pane
        root.setTop(toolBar);
        root.setCenter(gameCenter);
        root.setBottom(inputBar);
            
+       //Setup the stage and make size fixed 
        stage.setScene(new Scene(root, 700, 500));
-       //stage.setResizable(false);
+       stage.setResizable(false);
        root.getStylesheets().add(Canvas.class.getResource("TypespeedGame.css").toExternalForm());
        
-      
+       //Call show method
        stage.show();
        
+       //Update canvas 
        updateGame = new UpdateGame(gameCenter);
        updateGame.setScoreText(scoreText);
        updateGame.setup();
-       
        Platform.runLater(updateGame);
-      
+       
+       //Implement multi-threading
        new Thread(new Runnable() {
     	   	@Override public void run() {
     	   		try {
@@ -163,7 +152,8 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
        }).start();  
 }
 
-	//How to make these words show in the gameCenter		
+	/**Main Method**/
+    
 	public static void main (String[] args) {		
 		launch(args);	      
 	}
