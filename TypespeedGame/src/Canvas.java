@@ -48,7 +48,7 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
     private Image bg;
     public static boolean isSuccess = false;
    
-    UpdateTargets updateTargets;
+    UpdateGame updateGame;
     
     public void handle(ActionEvent event){
         
@@ -119,13 +119,9 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
             	   
             	   System.out.println(userInput.getText());
             	   Target target = Target.targets.get(userInput.getText());
+            	   userInput.setText("");
 	            	   if(target != null) {
-	            		   System.out.println("success");
-	            		   Target.targets.remove(target.word);
-	            		   isSuccess = true;
-	            		   userInput.setText("");
-	            		   updateTargets.currentScore += 25;
-	            		   //Platform.runLater(updateTargets);
+	            		   updateGame.hitTarget(target);
 	            	   }
                }
            }
@@ -154,17 +150,17 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
       
        stage.show();
        
-       updateTargets = new UpdateTargets(gameCenter);
-       updateTargets.setScoreText(scoreText);
-       updateTargets.setup();
+       updateGame = new UpdateGame(gameCenter);
+       updateGame.setScoreText(scoreText);
+       updateGame.setup();
        
-       Platform.runLater(updateTargets);
+       Platform.runLater(updateGame);
       
        new Thread(new Runnable() {
     	   	@Override public void run() {
     	   		try {
 	    	   		while(stage.isShowing()) {
-	    	   			Platform.runLater(updateTargets);
+	    	   			Platform.runLater(updateGame);
 	    	   		
 	    	   			Thread.sleep(50);
 	    	   		}
