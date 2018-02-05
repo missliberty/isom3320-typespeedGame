@@ -51,10 +51,7 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
     UpdateGame updateGame;
     
     public void handle(ActionEvent event){
-        
-        //Make the shooter appear if one word is paused/matched 
-        //Make the bullet move + play sound
-        //Show explosion + play sound
+
    }
    	
     @Override
@@ -76,7 +73,6 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
 
        final Pane rightSpace = new Pane();
        
-
        HBox.setHgrow(
                rightSpace,
                Priority.SOMETIMES);
@@ -137,7 +133,6 @@ public class Canvas extends Application implements EventHandler<ActionEvent> {
        gameCenter.setMinWidth(700);
        gameCenter.setPrefWidth(700);
  
-       
        //Add boxes to the border pane
        root.setTop(toolBar);
        root.setCenter(gameCenter);

@@ -89,7 +89,6 @@ public class Shooter extends Canvas {
 	    
 	    gShooter.setTranslateX(parentWidth/2);
 	    gShooter.setTranslateY(parentHeight - spShooter.getHeight());
-	    parent.getChildren().add(spBullet);
 	    
 	    Group gBullet = new Group();
 	    gBullet.getChildren().add(spBullet);

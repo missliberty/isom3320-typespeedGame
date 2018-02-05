@@ -1,9 +1,13 @@
-import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -13,72 +17,34 @@ import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 
-public class SplashScreen extends Application {
-	
+public class SplashScreen {
   private Pane splashLayout;
   private Button startButton;
-  private Stage mainStage;
-  private static final int SPLASH_WIDTH = 700;
-  private static final int SPLASH_HEIGHT = 500;
 
-  //Create main method that overrides Canvas main method
-  public static void main(String[] args) throws Exception { launch(args); }
+  Image splashImage = new Image("http://i65.tinypic.com/6p7zm0.png");
+  ImageView iv1 = new ImageView();
 
-  @Override public void init() {
+  public SplashScreen(UpdateGame updateGame) {
+	  iv1.setImage(splashImage);
+	  iv1.setPreserveRatio(true);
+	  startButton = new Button("START GAME");
+	  
+	  startButton.setOnMousePressed(new EventHandler<MouseEvent>()
+      {
+          @Override
+          public void handle(MouseEvent me) {
+              updateGame.gameState = GameState.PLAYING;
+          }
+      });
+  }
 
-    int x = 700;
-    int y = 500;
-    
-    Image image = new Image("http://i65.tinypic.com/6p7zm0.png",x,y, true, false);
-    ImageView iv1 = new ImageView();
-    iv1.setImage(image);
-    iv1.setPreserveRatio(true);
-
-    //Add START GAME button
-    Button button = new Button("START GAME");
-
+  public void show(Pane parent) { 
     StackPane stackPane = new StackPane();
-    stackPane.getChildren().addAll(iv1, button);
-    
-    splashLayout = new HBox();
-    splashLayout.getChildren().add(stackPane);
+    Group gButton = new Group();
+    gButton.getChildren().add(startButton);
+    stackPane.getChildren().addAll(iv1, gButton);
+    parent.getChildren().add(stackPane);
 
+    gButton.setTranslateY(parent.getHeight()/2 - startButton.getLayoutBounds().getHeight());
   }
-  
-  @Override public void start(final Stage initStage) throws Exception {
-    showSplash(initStage);
-    showMainStage();
-
-  }
-
-  private void showMainStage() {
-    mainStage = new Stage();
-    mainStage.setIconified(true);
-   
-    // layout the scene.
-
-    Scene scene = null;
-	mainStage.setScene(scene);
-    mainStage.show();
-    
-  }
-
-  private void showSplash(Stage initStage) {
-    Scene splashScene = new Scene(splashLayout);
-    final Rectangle2D bounds = Screen.getPrimary().getBounds();
-    initStage.setScene(splashScene);
-    
-    initStage.setX(bounds.getMinX() + bounds.getWidth() / 2 - SPLASH_WIDTH / 2);
-    initStage.setY(bounds.getMinY() + bounds.getHeight() / 2 - SPLASH_HEIGHT / 2);
-    initStage.show();
-  }
-  
-  
-public Button getStartButton() {
-	return startButton;
-}
-
-public void setStartButton(Button startButton) {
-	this.startButton = startButton;
-}
 }

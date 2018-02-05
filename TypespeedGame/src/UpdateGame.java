@@ -18,11 +18,20 @@ public class UpdateGame implements Runnable {
 	public UpdateGame (Pane parent) {
 		this.parent = parent;
 		this.shooter = new Shooter();
-		this.gameState = GameState.PLAYING;
+		this.splashScreen = new SplashScreen(this);
+		this.gameState = GameState.SPLASH;
 	}
 	
 	@Override
 	public void run() {
+				//clear the gameCenter
+				parent.getChildren().clear();
+		
+				if (gameState == GameState.SPLASH) {
+					splashScreen.show(this.parent);
+					return;
+				}
+
 				//update targets
 				Collection<Target> targets = Target.getTargets();
 				
@@ -32,9 +41,6 @@ public class UpdateGame implements Runnable {
 						aTarget.update();
 					}
 				}
-
-				//clear the gameCenter
-				parent.getChildren().clear();
 				
 				//add back the elements 
 				addTargetsToParent(parent);
